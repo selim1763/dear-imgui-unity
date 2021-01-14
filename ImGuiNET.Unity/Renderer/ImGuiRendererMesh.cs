@@ -26,7 +26,7 @@ namespace ImGuiNET.Unity
         {   // ImDrawVert layout
             new VertexAttributeDescriptor(VertexAttribute.Position , VertexAttributeFormat.Float32, 2), // position
             new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 2), // uv
-            new VertexAttributeDescriptor(VertexAttribute.TexCoord1, VertexAttributeFormat.UInt32 , 1), // color
+            new VertexAttributeDescriptor(VertexAttribute.TexCoord1, VertexAttributeFormat.UInt8 , 4), // color
         };
         // skip all checks and validation when updating the mesh
         const MeshUpdateFlags NoMeshChecks = MeshUpdateFlags.DontNotifyMeshUsers | MeshUpdateFlags.DontRecalculateBounds
@@ -160,7 +160,7 @@ namespace ImGuiNET.Unity
                         _properties.SetTexture(_texID, _texManager.GetTexture((int)(prevTextureId = drawCmd.TextureId)));
 
                     cmd.EnableScissorRect(new Rect(clip.x, fbSize.y - clip.w, clip.z - clip.x, clip.w - clip.y)); // invert y
-                    cmd.DrawMesh(_mesh, Matrix4x4.identity, _material, subOf, -1, _properties);
+                    cmd.DrawMesh(_mesh, Matrix4x4.identity, _material, subOf, 0, _properties);
                 }
             }
             cmd.DisableScissorRect();

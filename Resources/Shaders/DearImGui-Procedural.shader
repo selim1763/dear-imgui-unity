@@ -59,10 +59,8 @@
 
             Varyings vert(uint id : SV_VertexID)
             {
-#if defined(SHADER_API_D3D11) || defined(SHADER_API_XBOXONE)
-                // BaseVertexLocation is not automatically added to SV_VertexID
+
                 id += _BaseVertex;
-#endif
                 ImVert v = _Vertices[id];
                 return ImGuiPassVertex(v);
             }
