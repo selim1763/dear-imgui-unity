@@ -1,4 +1,4 @@
-﻿Shader "DearImGui/Procedural"
+Shader "DearImGui/Procedural"
 {
     // shader for Universal render pipeline
     SubShader
@@ -17,7 +17,7 @@
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment ImGuiPassFrag
-            #include "Packages/com.realgames.dear-imgui/Resources/Shaders/PassesUniversal.hlsl"
+            #include "Packages/com.armiidev.dear-imgui/Resources/Shaders/PassesUniversal.hlsl"
 
             StructuredBuffer<ImVert> _Vertices;
             int _BaseVertex;
@@ -52,7 +52,7 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment ImGuiPassFrag
-            #include "Packages/com.realgames.dear-imgui/Resources/Shaders/PassesBuiltin.hlsl"
+            #include "Packages/com.armiidev.dear-imgui/Resources/Shaders/PassesBuiltin.hlsl"
 
             StructuredBuffer<ImVert> _Vertices;
             int _BaseVertex;
