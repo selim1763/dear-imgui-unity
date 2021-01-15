@@ -45,16 +45,20 @@ namespace ImGuiNET.Unity
 
         public void Assign(ImGuiIOPtr io)
         {
-            io.SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(_setClipboardText);
-            io.GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(_getClipboardText);
-            io.ImeSetInputScreenPosFn = Marshal.GetFunctionPointerForDelegate(_imeSetInputScreenPos);
-#if IMGUI_FEATURE_CUSTOM_ASSERT
-            io.SetBackendPlatformUserData<CustomAssertData>(new CustomAssertData
-            {
-                LogAssertFn = Marshal.GetFunctionPointerForDelegate(_logAssert),
-                DebugBreakFn = Marshal.GetFunctionPointerForDelegate(_debugBreak),
-            });
-#endif
+            //io.SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(_setClipboardText);
+            //io.GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(_getClipboardText);
+           // io.ImeSetInputScreenPosFn = Marshal.GetFunctionPointerForDelegate(_imeSetInputScreenPos);
+           io.SetClipboardTextFn                              = IntPtr.Zero;
+           io.GetClipboardTextFn                              = IntPtr.Zero;
+           io.ImeSetInputScreenPosFn                          = IntPtr.Zero;
+           io.SetBackendPlatformUserData<CustomAssertData>(null);
+           #if IMGUI_FEATURE_CUSTOM_ASSERT
+            // io.SetBackendPlatformUserData<CustomAssertData>(new CustomAssertData
+            // {
+            //     LogAssertFn = Marshal.GetFunctionPointerForDelegate(_logAssert),
+            //     DebugBreakFn = Marshal.GetFunctionPointerForDelegate(_debugBreak),
+            // });
+           #endif
         }
 
         public void Unset(ImGuiIOPtr io)
