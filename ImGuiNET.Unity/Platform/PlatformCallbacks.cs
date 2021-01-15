@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -51,11 +51,11 @@ namespace ImGuiNET.Unity
            io.SetClipboardTextFn                              = IntPtr.Zero;
            io.GetClipboardTextFn                              = IntPtr.Zero;
            io.ImeSetInputScreenPosFn                          = IntPtr.Zero;
-           io.SetBackendPlatformUserData<CustomAssertData>(null);
            
            #if IMGUI_FEATURE_CUSTOM_ASSERT
             // io.SetBackendPlatformUserData<CustomAssertData>(new CustomAssertData
             // {
+           	   io.SetBackendPlatformUserData<CustomAssertData>(null);
             //     LogAssertFn = Marshal.GetFunctionPointerForDelegate(_logAssert),
             //     DebugBreakFn = Marshal.GetFunctionPointerForDelegate(_debugBreak),
             // });
