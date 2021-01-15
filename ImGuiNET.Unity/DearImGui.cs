@@ -56,7 +56,7 @@ namespace ImGuiNET.Unity
         void OnEnable()
         {
             _usingURP = RenderUtils.IsUsingURP();
-            if (_camera == null) Fail(nameof(_camera));
+            if (_camera == null && !_usingURP) Fail(nameof(_camera));
             if (_renderFeature == null && _usingURP) Fail(nameof(_renderFeature));
 
             _cmd = RenderUtils.GetCommandBuffer(CommandBufferTag);
@@ -130,6 +130,7 @@ namespace ImGuiNET.Unity
 
         void Update()
         {
+            if (!_camera) _camera = Camera.main;
             ImGuiUn.SetUnityContext(_context);
             ImGuiIOPtr io = ImGui.GetIO();
 
