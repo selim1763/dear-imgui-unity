@@ -52,6 +52,7 @@ namespace ImGuiNET.Unity
            io.GetClipboardTextFn                              = IntPtr.Zero;
            io.ImeSetInputScreenPosFn                          = IntPtr.Zero;
            io.SetBackendPlatformUserData<CustomAssertData>(null);
+           
            #if IMGUI_FEATURE_CUSTOM_ASSERT
             // io.SetBackendPlatformUserData<CustomAssertData>(new CustomAssertData
             // {
