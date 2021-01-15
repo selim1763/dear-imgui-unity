@@ -1,5 +1,5 @@
 {
-  "name": "com.armiidev.dear-imgui",
+  "name": "com.realgames.dear-imgui",
   "displayName": "Dear ImGui",
   "version": "1.0.0",
   "description": "Bloat-free Immediate Mode Graphical User interface",
@@ -10,15 +10,15 @@
     "ui"
   ],
   "author": {
-    "name": "Armağan Selim (originally from Real Games)",
-    "url": "https://armiidev.com"
+    "name": "Real Games",
+    "url": "https://realgames.co"
   },
   "dependencies": {
     "com.unity.collections": "0.5.0-preview.9"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/selim1763/dear-imgui-unity",
+    "url": "https://github.com/realgamessoftware/dear-imgui-unity",
     "revision": ""
   },
   "type": "library"
