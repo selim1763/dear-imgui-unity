@@ -1,4 +1,4 @@
-﻿Shader "DearImGui/Mesh"
+Shader "DearImGui/Mesh"
 {
     // shader for Universal render pipeline
     SubShader
@@ -17,7 +17,7 @@
             HLSLPROGRAM
             #pragma vertex ImGuiPassVertex
             #pragma fragment ImGuiPassFrag
-            #include "Packages/com.realgames.dear-imgui/Resources/Shaders/PassesUniversal.hlsl"
+            #include "Packages/com.armiidev.dear-imgui/Resources/Shaders/PassesUniversal.hlsl"
             ENDHLSL
         }
     }
@@ -39,7 +39,7 @@
             CGPROGRAM
             #pragma vertex ImGuiPassVertex
             #pragma fragment ImGuiPassFrag
-            #include "Packages/com.realgames.dear-imgui/Resources/Shaders/PassesBuiltin.hlsl"
+            #include "Packages/com.armiidev.dear-imgui/Resources/Shaders/PassesBuiltin.hlsl"
             ENDCG
         }
     }

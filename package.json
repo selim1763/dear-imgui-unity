@@ -1,5 +1,5 @@
 {
-  "name": "com.realgames.dear-imgui",
+  "name": "com.armiidev.dear-imgui",
   "displayName": "Dear ImGui",
   "version": "1.0.0",
   "description": "Bloat-free Immediate Mode Graphical User interface",
@@ -10,8 +10,8 @@
     "ui"
   ],
   "author": {
-    "name": "Real Games",
-    "url": "https://realgames.co"
+    "name": "armiidev / Originally Real Games",
+    "url": "armiidev.com / https://realgames.co"
   },
   "dependencies": {
     "com.unity.collections": "0.5.0-preview.9"
