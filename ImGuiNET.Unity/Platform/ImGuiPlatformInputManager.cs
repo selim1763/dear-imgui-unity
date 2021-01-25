@@ -34,6 +34,15 @@ namespace ImGuiNET.Unity
             DebugBreak = () => System.Diagnostics.Debugger.Break(),
 #endif
         };
+        
+        #if UNITY_IOS || UNITY_ANDROID
+        private Camera      camera;
+        private BoxCollider scrollCollider;
+
+        private float   scrollSensitivity = 0.2f;
+        private Vector2 lastWindowPosition;
+        private bool    onWindow = false;
+        #endif
 
         public ImGuiPlatformInputManager(CursorShapesAsset cursorShapes, IniSettingsAsset iniSettings)
         {
@@ -139,18 +148,67 @@ namespace ImGuiNET.Unity
                     io.AddInputCharacter(_e.character);
         }
 
-        static void UpdateMouse(ImGuiIOPtr io)
+        void UpdateMouse(ImGuiIOPtr io)
         {
             io.MousePos = ImGuiUn.ScreenToImGui(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
 
-            io.MouseWheel  = Input.mouseScrollDelta.y;
-            io.MouseWheelH = Input.mouseScrollDelta.x;
+            Vector2 scrollDelta = GetScrollDelta();
+            io.MouseWheel  = scrollDelta.y;
+            io.MouseWheelH = scrollDelta.x;
 
             io.MouseDown[0] = Input.GetMouseButton(0);
             io.MouseDown[1] = Input.GetMouseButton(1);
             io.MouseDown[2] = Input.GetMouseButton(2);
         }
 
+        #if UNITY_IOS || UNITY_ANDROID
+        public void SetCameraAndScrollCollider(Camera camera, BoxCollider scrollCollider)
+        {
+            this.camera = camera;
+            this.scrollCollider = scrollCollider;
+        }
+
+        public void SetScrollSensitivity(float sensitivity)
+        {
+            scrollSensitivity = sensitivity;
+        }
+        #endif
+
+        Vector2 GetScrollDelta()
+        {
+            Vector2 scrollDelta = Vector3.zero;
+            
+            #if UNITY_IOS || UNITY_ANDROID
+            if (Input.GetMouseButton(0))
+            {
+                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (scrollCollider.Raycast(ray, out hit, 25f))
+                {
+                    Vector2 windowPosition = ray.GetPoint(0.0f);
+
+                    if (onWindow)
+                    {
+                        scrollDelta = (windowPosition - lastWindowPosition).normalized;
+                        scrollDelta *= 0.5f * scrollSensitivity;
+                        lastWindowPosition = windowPosition;
+                    }
+
+                    onWindow = true;
+                }
+            }
+            else
+            {
+                onWindow = false;
+            }
+            #else
+            scrollDelta = Input.mouseScrollDelta;
+            #endif
+
+            return scrollDelta;
+        }
+        
         void UpdateCursor(ImGuiIOPtr io, ImGuiMouseCursor cursor)
         {
             if (io.MouseDrawCursor)

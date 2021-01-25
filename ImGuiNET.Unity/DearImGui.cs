@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 using Unity.Profiling;
 
@@ -19,10 +19,15 @@ namespace ImGuiNET.Unity
         CommandBuffer _cmd;
         bool _usingURP;
 
+        #if UNITY_IOS || UNITY_ANDROID
+        BoxCollider scrollCollider;
+        #endif
+        
         public event System.Action Layout;  // Layout event for *this* ImGui instance
         [SerializeField] bool _doGlobalLayout = true; // do global/default Layout event too
 
         [SerializeField] Camera _camera = null;
+        
         [SerializeField] RenderImGuiFeature _renderFeature = null;
 
         [SerializeField] RenderUtils.RenderType _rendererType = RenderUtils.RenderType.Mesh;
@@ -128,13 +133,9 @@ namespace ImGuiNET.Unity
             OnEnable();
         }
 
+        
         void Update()
         {
-	    if (Time.unscaledDeltaTime <= 0.0f)
-            {
-                return;
-            }
-
             if (!_camera) _camera = Camera.main;
             ImGuiUn.SetUnityContext(_context);
             ImGuiIOPtr io = ImGui.GetIO();
@@ -164,6 +165,20 @@ namespace ImGuiNET.Unity
             s_drawListPerfMarker.End();
         }
 
+        #if UNITY_IOS || UNITY_ANDROID
+        public void SetScrollCollider(BoxCollider scrollCollider)
+        {
+            this.scrollCollider = scrollCollider;
+            _platform?.SetCameraAndScrollCollider(_camera, scrollCollider);
+        }
+        
+        public void SetScrollSensitivity(float sensitivity)
+        {
+            sensitivity = Mathf.Clamp(sensitivity, 0.1f, 2.0f);
+            _platform.SetScrollSensitivity(sensitivity);
+        }
+        #endif
+        
         void SetRenderer(IImGuiRenderer renderer, ImGuiIOPtr io)
         {
             _renderer?.Shutdown(io);
