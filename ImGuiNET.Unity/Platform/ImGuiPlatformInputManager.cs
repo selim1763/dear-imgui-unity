@@ -178,14 +178,14 @@ namespace ImGuiNET.Unity
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
-                if (scrollCollider.Raycast(ray, out hit, 25f))
+                if (scrollCollider.enabled && scrollCollider.Raycast(ray, out hit, 25f))
                 {
                     Vector2 windowPosition = ray.GetPoint(0.0f);
 
                     if (isScrolling)
                     {
                         scrollDelta = (windowPosition - lastWindowPosition).normalized;
-                        scrollDelta *= 0.1f;
+                        scrollDelta *= -0.1f;
                         lastWindowPosition = windowPosition;
                     }
 
