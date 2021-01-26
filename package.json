@@ -1,7 +1,7 @@
 {
   "name": "com.armiidev.dear-imgui",
   "displayName": "Dear ImGui",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Bloat-free Immediate Mode Graphical User interface",
   "unity": "2019.3",
   "keywords": [

@@ -171,12 +171,6 @@ namespace ImGuiNET.Unity
             this.scrollCollider = scrollCollider;
             _platform?.SetCameraAndScrollCollider(_camera, scrollCollider);
         }
-        
-        public void SetScrollSensitivity(float sensitivity)
-        {
-            sensitivity = Mathf.Clamp(sensitivity, 0.1f, 2.0f);
-            _platform.SetScrollSensitivity(sensitivity);
-        }
         #endif
         
         void SetRenderer(IImGuiRenderer renderer, ImGuiIOPtr io)

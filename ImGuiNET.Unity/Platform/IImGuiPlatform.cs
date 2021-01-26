@@ -13,8 +13,6 @@ namespace ImGuiNET.Unity
 
         #if UNITY_IOS || UNITY_ANDROID
         void SetCameraAndScrollCollider(Camera camera, BoxCollider scrollCollider);
-
-        void SetScrollSensitivity(float sensitivity);
         #endif
     }
 }

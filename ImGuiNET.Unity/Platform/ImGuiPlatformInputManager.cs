@@ -39,9 +39,8 @@ namespace ImGuiNET.Unity
         private Camera      camera;
         private BoxCollider scrollCollider;
 
-        private float   scrollSensitivity = 0.2f;
         private Vector2 lastWindowPosition;
-        private bool    onWindow = false;
+        private bool    isScrolling = false;
         #endif
 
         public ImGuiPlatformInputManager(CursorShapesAsset cursorShapes, IniSettingsAsset iniSettings)
@@ -167,18 +166,13 @@ namespace ImGuiNET.Unity
             this.camera = camera;
             this.scrollCollider = scrollCollider;
         }
-
-        public void SetScrollSensitivity(float sensitivity)
-        {
-            scrollSensitivity = sensitivity;
-        }
         #endif
 
         Vector2 GetScrollDelta()
         {
-            Vector2 scrollDelta = Vector3.zero;
-            
-            #if UNITY_IOS || UNITY_ANDROID
+            Vector2 scrollDelta = Input.mouseScrollDelta;
+
+            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
             if (Input.GetMouseButton(0))
             {
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
@@ -188,22 +182,20 @@ namespace ImGuiNET.Unity
                 {
                     Vector2 windowPosition = ray.GetPoint(0.0f);
 
-                    if (onWindow)
+                    if (isScrolling)
                     {
                         scrollDelta = (windowPosition - lastWindowPosition).normalized;
-                        scrollDelta *= 0.5f * scrollSensitivity;
+                        scrollDelta *= 0.1f;
                         lastWindowPosition = windowPosition;
                     }
 
-                    onWindow = true;
+                    isScrolling = true;
                 }
             }
             else
             {
-                onWindow = false;
+                isScrolling = false;
             }
-            #else
-            scrollDelta = Input.mouseScrollDelta;
             #endif
 
             return scrollDelta;
