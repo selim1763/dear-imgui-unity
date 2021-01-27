@@ -185,7 +185,7 @@ namespace ImGuiNET.Unity
                     if (isScrolling)
                     {
                         scrollDelta = (windowPosition - lastWindowPosition).normalized;
-                        scrollDelta *= -0.25f;
+                        scrollDelta *= -0.16f;
                         lastWindowPosition = windowPosition;
                     }
 
