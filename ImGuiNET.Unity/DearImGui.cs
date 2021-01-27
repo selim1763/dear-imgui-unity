@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Rendering;
 using Unity.Profiling;
 
@@ -136,6 +136,10 @@ namespace ImGuiNET.Unity
         
         void Update()
         {
+	    if (Time.unscaledDeltaTime <= 0.0f)
+	    {
+		return;
+	    }
             if (!_camera) _camera = Camera.main;
             ImGuiUn.SetUnityContext(_context);
             ImGuiIOPtr io = ImGui.GetIO();
