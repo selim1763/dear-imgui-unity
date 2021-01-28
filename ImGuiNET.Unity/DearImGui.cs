@@ -170,10 +170,10 @@ namespace ImGuiNET.Unity
         }
 
         #if UNITY_IOS || UNITY_ANDROID
-        public void SetScrollCollider(BoxCollider scrollCollider)
+        public void SetScrollCollider(Camera camera, BoxCollider scrollCollider)
         {
             this.scrollCollider = scrollCollider;
-            _platform?.SetCameraAndScrollCollider(_camera, scrollCollider);
+            _platform?.SetCameraAndScrollCollider(camera, scrollCollider);
         }
         #endif
         
