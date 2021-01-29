@@ -169,13 +169,11 @@ namespace ImGuiNET.Unity
             s_drawListPerfMarker.End();
         }
 
-        #if UNITY_IOS || UNITY_ANDROID
         public void SetCameraAndScrollCollider(Camera camera, BoxCollider scrollCollider)
         {
             this.scrollCollider = scrollCollider;
             _platform?.SetCameraAndScrollCollider(camera, scrollCollider);
         }
-        #endif
         
         void SetRenderer(IImGuiRenderer renderer, ImGuiIOPtr io)
         {

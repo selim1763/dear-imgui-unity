@@ -35,16 +35,15 @@ namespace ImGuiNET.Unity
 #endif
         };
         
-        #if UNITY_IOS || UNITY_ANDROID
         private Camera      camera;
         private BoxCollider scrollCollider;
 
         private Vector2 lastWindowPosition;
         private bool    isScrolling = false;
+        private bool    isHolding   = false;
 
-	private float scrollTimer = 0.0f;
-        private const float scrollThreshold = 0.2f;
-        #endif
+        private       Vector3 holdStartPosition;
+        private const float   scrollDeadZone = 60.0f;
 
         public ImGuiPlatformInputManager(CursorShapesAsset cursorShapes, IniSettingsAsset iniSettings)
         {
@@ -163,51 +162,55 @@ namespace ImGuiNET.Unity
             io.MouseDown[2] = Input.GetMouseButton(2);
         }
 
-        #if UNITY_IOS || UNITY_ANDROID
         public void SetCameraAndScrollCollider(Camera camera, BoxCollider scrollCollider)
         {
             this.camera = camera;
             this.scrollCollider = scrollCollider;
         }
-        #endif
 
         Vector2 GetScrollDelta()
         {
             Vector2 scrollDelta = Input.mouseScrollDelta;
 
-            #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
             if (_lastCursor == ImGuiMouseCursor.Arrow && Input.GetMouseButton(0))
             {
-		scrollTimer += Time.deltaTime;
-                if (scrollTimer < scrollThreshold)
-                {
-                    return scrollDelta;
-                }
-		
-                Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+                Vector3 mousePosition = Input.mousePosition;
+                Ray ray = camera.ScreenPointToRay(mousePosition);
                 RaycastHit hit;
 
                 if (scrollCollider.enabled && scrollCollider.Raycast(ray, out hit, 25f))
                 {
                     Vector2 windowPosition = ray.GetPoint(0.0f);
 
-                    if (isScrolling)
+                    if (isHolding && !isScrolling)
                     {
-                        scrollDelta = (windowPosition - lastWindowPosition).normalized;
-			scrollDelta.x = 0;
-                        scrollDelta *= -0.125f;
-                        lastWindowPosition = windowPosition;
+                        float distance = Vector3.Distance(holdStartPosition, mousePosition);
+                        if (distance > scrollDeadZone)
+                        {
+                            isScrolling = true;
+                        }
+                    }
+                    else
+                    {
+                        holdStartPosition = mousePosition;                        
+                        isHolding         = true;
                     }
 
-                    isScrolling = true;
+                    if (isScrolling)
+                    {
+                        scrollDelta        =  (windowPosition - lastWindowPosition).normalized;
+                        scrollDelta.x      =  0;
+                        scrollDelta        *= -0.125f;
+                        lastWindowPosition =  windowPosition;
+                    }
+
                 }
             }
             else
             {
-                scrollTimer = 0.0f;
+                isHolding   = false;
                 isScrolling = false;
             }
-            #endif
 
             return scrollDelta;
         }
