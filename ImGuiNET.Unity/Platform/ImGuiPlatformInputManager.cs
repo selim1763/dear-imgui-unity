@@ -41,6 +41,9 @@ namespace ImGuiNET.Unity
 
         private Vector2 lastWindowPosition;
         private bool    isScrolling = false;
+
+	private float scrollTimer = 0.0f;
+        private const float scrollThreshold = 0.2f;
         #endif
 
         public ImGuiPlatformInputManager(CursorShapesAsset cursorShapes, IniSettingsAsset iniSettings)
@@ -173,8 +176,14 @@ namespace ImGuiNET.Unity
             Vector2 scrollDelta = Input.mouseScrollDelta;
 
             #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-            if (Input.GetMouseButton(0))
+            if (_lastCursor == ImGuiMouseCursor.Arrow && Input.GetMouseButton(0))
             {
+		scrollTimer += Time.deltaTime;
+                if (scrollTimer < scrollThreshold)
+                {
+                    return scrollDelta;
+                }
+		
                 Ray ray = camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
@@ -195,6 +204,7 @@ namespace ImGuiNET.Unity
             }
             else
             {
+                scrollTimer = 0.0f;
                 isScrolling = false;
             }
             #endif
