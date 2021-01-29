@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -185,7 +185,8 @@ namespace ImGuiNET.Unity
                     if (isScrolling)
                     {
                         scrollDelta = (windowPosition - lastWindowPosition).normalized;
-                        scrollDelta *= -0.16f;
+			scrollDelta.x = 0;
+                        scrollDelta *= -0.125f;
                         lastWindowPosition = windowPosition;
                     }
 
