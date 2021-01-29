@@ -11,8 +11,6 @@ namespace ImGuiNET.Unity
         void Shutdown(ImGuiIOPtr io);
         void PrepareFrame(ImGuiIOPtr io, Rect displayRect);
 
-        #if UNITY_IOS || UNITY_ANDROID
         void SetCameraAndScrollCollider(Camera camera, BoxCollider scrollCollider);
-        #endif
     }
 }

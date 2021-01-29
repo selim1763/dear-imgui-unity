@@ -19,9 +19,7 @@ namespace ImGuiNET.Unity
         CommandBuffer _cmd;
         bool _usingURP;
 
-        #if UNITY_IOS || UNITY_ANDROID
         BoxCollider scrollCollider;
-        #endif
         
         public event System.Action Layout;  // Layout event for *this* ImGui instance
         [SerializeField] bool _doGlobalLayout = true; // do global/default Layout event too
