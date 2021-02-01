@@ -1,10 +1,10 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 
 namespace ImGuiNET
 {
     static unsafe partial class CustomAssertNative
     {
-        #if UNITY_IOS
+        #if UNITY_IOS && !UNITY_EDITOR
         private const string dll_name = "__Internal";
         #else
         private const string dll_name = "cimgui";

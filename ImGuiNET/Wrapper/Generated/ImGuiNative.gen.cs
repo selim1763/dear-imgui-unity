@@ -6,7 +6,7 @@ namespace ImGuiNET
 {
     public static unsafe partial class ImGuiNative
     {
-        #if UNITY_IOS
+        #if UNITY_IOS && !UNITY_EDITOR
         private const string dll_name = "__Internal";
         #else
         private const string dll_name = "cimgui";
