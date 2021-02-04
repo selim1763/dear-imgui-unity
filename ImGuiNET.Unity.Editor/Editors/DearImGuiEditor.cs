@@ -9,7 +9,6 @@ namespace ImGuiNET.Unity.Editor
     {
         SerializedProperty _doGlobalLayout;
 
-        SerializedProperty _camera;
         SerializedProperty _renderFeature;
 
         SerializedProperty _renderer;
@@ -28,7 +27,6 @@ namespace ImGuiNET.Unity.Editor
         void OnEnable()
         {
             _doGlobalLayout = serializedObject.FindProperty("_doGlobalLayout");
-            _camera = serializedObject.FindProperty("_camera");
             _renderFeature = serializedObject.FindProperty("_renderFeature");
             _renderer = serializedObject.FindProperty("_rendererType");
             _platform = serializedObject.FindProperty("_platformType");
@@ -51,7 +49,6 @@ namespace ImGuiNET.Unity.Editor
             EditorGUILayout.PropertyField(_doGlobalLayout);
             if (RenderUtils.IsUsingURP())
                 EditorGUILayout.PropertyField(_renderFeature);
-            EditorGUILayout.PropertyField(_camera);
             EditorGUILayout.PropertyField(_renderer);
             EditorGUILayout.PropertyField(_platform);
             EditorGUILayout.PropertyField(_initialConfiguration);
@@ -76,8 +73,6 @@ namespace ImGuiNET.Unity.Editor
         void CheckRequirements()
         {
             _messages.Clear();
-            if (_camera.objectReferenceValue == null)
-                _messages.AppendLine("Must assign a Camera.");
             if (RenderUtils.IsUsingURP() && _renderFeature.objectReferenceValue == null)
                 _messages.AppendLine("Must assign a RenderFeature when using the URP.");
             if (!Platform.IsAvailable((Platform.Type)_platform.enumValueIndex))
