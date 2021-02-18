@@ -59,7 +59,7 @@ namespace ImGuiNET.Unity
         void OnEnable()
         {
             _usingURP = RenderUtils.IsUsingURP();
-            if (_camera == null && !_usingURP) _camera = FindObjectOfType<Camera>();
+            if (_camera == null && !_usingURP) _camera = GetComponent<Camera>();
             if (_renderFeature == null && _usingURP) Fail(nameof(_renderFeature));
 
             _cmd = RenderUtils.GetCommandBuffer(CommandBufferTag);
@@ -121,7 +121,7 @@ namespace ImGuiNET.Unity
 
         void Reset()
         {
-            _camera = Camera.main;
+            _camera = GetComponent<Camera>();
             _initialConfiguration.SetDefaults();
         }
 
@@ -138,7 +138,7 @@ namespace ImGuiNET.Unity
 	    {
 		return;
 	    }
-            if (!_camera) _camera = Camera.main;
+            if (!_camera) _camera = GetComponent<Camera>();
             ImGuiUn.SetUnityContext(_context);
             ImGuiIOPtr io = ImGui.GetIO();
 
