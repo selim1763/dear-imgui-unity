@@ -1,7 +1,6 @@
 #ifndef DEARIMGUI_UNIVERSAL_INCLUDED
 #define DEARIMGUI_UNIVERSAL_INCLUDED
 
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #ifndef UNITY_COLORSPACE_GAMMA
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 #endif
